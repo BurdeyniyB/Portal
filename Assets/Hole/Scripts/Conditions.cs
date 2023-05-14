@@ -6,7 +6,7 @@ using UnityEngine;
 public class Conditions : MonoBehaviour
 {
     public int points;
-    public OnChangePosition OnChangePosition;
+    public ChangeScale _changeScale;
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(collision.gameObject);
@@ -19,7 +19,7 @@ public class Conditions : MonoBehaviour
 
         if(points % 10 == 0)
         {
-            StartCoroutine(OnChangePosition.ScaleHole());
+            StartCoroutine(_changeScale.ScaleHole());
         }
     }
 }
