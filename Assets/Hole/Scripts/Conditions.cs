@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Conditions : MonoBehaviour
 {
-    public int points;
-    public ChangeScale _changeScale;
+    [SerializeField] private ChangeScale _changeScale;
+    [SerializeField] private ChangeHoleBorderColor _changeHoleBorderColor;
+    [SerializeField] private int _needCountObstacles;
+    [SerializeField] private float _deltaChangeScale;
+    private int _countCollisionObstacle;
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(collision.gameObject);
@@ -15,11 +18,14 @@ public class Conditions : MonoBehaviour
 
     private void CaltulateProgress()
     {
-        points++;
+        _countCollisionObstacle++;
 
-        if(points % 10 == 0)
+        if(_countCollisionObstacle % _needCountObstacles == 0)
         {
-            StartCoroutine(_changeScale.ScaleHole());
+            _countCollisionObstacle = 0;
+            StartCoroutine(_changeScale.ScaleHole(_deltaChangeScale));
         }
+
+        _changeHoleBorderColor.ChangeFalledBorder((float)_countCollisionObstacle / (float)_needCountObstacles);
     }
 }

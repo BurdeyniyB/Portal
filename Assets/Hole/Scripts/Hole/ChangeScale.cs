@@ -4,10 +4,10 @@ using UnityEngine;
 public class ChangeScale : MonoBehaviour
 {
     private float _timeOfChangeScale = 0.4f;
-    public IEnumerator ScaleHole()
+    public IEnumerator ScaleHole(float _deltaChangeScale)
     {
         Vector3 StartScale = transform.localScale;
-        Vector3 EndScale = StartScale * 2;
+        Vector3 EndScale = new Vector3(StartScale.x * _deltaChangeScale, 1, StartScale.z * _deltaChangeScale);
 
         float time = 0;
         while (time <= _timeOfChangeScale)
