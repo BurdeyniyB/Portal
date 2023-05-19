@@ -1,31 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
+using System;
 using UnityEngine;
 
 public class Conditions : MonoBehaviour
 {
-    [SerializeField] private ChangeScale _changeScale;
-    [SerializeField] private ChangeHoleBorderColor _changeHoleBorderColor;
+    public event Action<float> OnChangeFalledBorder;
+    public event Action<float> OnChangeScale;
+
     [SerializeField] private int _needCountObstacles;
     [SerializeField] private float _deltaChangeScale;
-    private int _countCollisionObstacle;
+
+    private int _countCollisionObstacleKilled;
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(collision.gameObject);
-        CaltulateProgress();
+            Destroy(collision.gameObject);
+            CaltulateProgress();
     }
 
     private void CaltulateProgress()
     {
-        _countCollisionObstacle++;
+        _countCollisionObstacleKilled++;
 
-        if(_countCollisionObstacle % _needCountObstacles == 0)
+        if(_countCollisionObstacleKilled % _needCountObstacles == 0)
         {
-            _countCollisionObstacle = 0;
-            StartCoroutine(_changeScale.ScaleHole(_deltaChangeScale));
+            _countCollisionObstacleKilled = 0;
+            OnChangeScale.Invoke(_deltaChangeScale);
         }
 
-        _changeHoleBorderColor.ChangeFalledBorder((float)_countCollisionObstacle / (float)_needCountObstacles);
+        OnChangeFalledBorder.Invoke((float)_countCollisionObstacleKilled / (float)_needCountObstacles);
     }
 }

@@ -1,17 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class ChangeGroundMesh : MonoBehaviour
 {
+    [SerializeField] private Move _move;
     [SerializeField] private PolygonCollider2D _hole2DCollider;
     [SerializeField] private PolygonCollider2D _ground2DCollider;
     [SerializeField] private MeshCollider _generatedMeshCollider;
     [SerializeField] private float initialScale = 0.5f;
     private Mesh GeneratedMesh;
 
-    private void FixedUpdate()
+    private void OnEnable()
+    {
+        _move.MoveCompleted += ChangeMesh;
+    }
+
+    private void OnDisable()
+    {
+        _move.MoveCompleted -= ChangeMesh;
+    }
+
+    private void ChangeMesh()
     {
         if (transform.hasChanged)
         {

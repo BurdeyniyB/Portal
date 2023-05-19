@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class Move : MonoBehaviour
 {
+    public event Action MoveCompleted;
+
     [SerializeField] private Collider _groundCollider;
     [SerializeField] private float speed = 1;
     [Range(0.1f, 0.5f)][SerializeField] private float _distanceFactorX = 0.4f;
@@ -47,6 +50,7 @@ public class Move : MonoBehaviour
             deltaPosition = GetDeltaPositionX(raycastPosition, deltaPosition, deltaTwoPosX);
             deltaPosition = GetDeltaPositionZ(raycastPosition, deltaPosition, deltaTwoPosZ);
             _raycastPosition = deltaPosition;
+            MoveCompleted.Invoke();
         }
     }
 
