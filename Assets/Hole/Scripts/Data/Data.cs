@@ -14,6 +14,12 @@ public class Data : DataGame
         return number;
     }
 
+    public int GetCountLose()
+    {
+        int count = PlayerPrefs.GetInt("CountLose");
+        return count;
+    }
+
     public void SetSceneName(string name)
     {
         PlayerPrefs.SetString("SceneName", name);
@@ -22,5 +28,10 @@ public class Data : DataGame
     public void SetNumberLevel(int number)
     {
        PlayerPrefs.SetInt("NumberLevel", number);
+    }
+
+    public void SetCountLose(int count)
+    {
+        PlayerPrefs.SetInt("CountLose", count);
     }
 }

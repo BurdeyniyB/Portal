@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
+        SaveCountLose();
         SceneManager.LoadScene(0);
     }
 
@@ -27,5 +28,13 @@ public class LevelManager : MonoBehaviour
     public void SetScenePath(string name)
     {
         _scenePath = name;
+    }
+
+    private void SaveCountLose()
+    {
+        Data _data = new Data();
+        int count = _data.GetCountLose();
+        _data.SetCountLose(++count);
+        Debug.Log("Save Count Lose");
     }
 }
